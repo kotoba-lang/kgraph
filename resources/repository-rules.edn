@@ -7,4 +7,4 @@
   :tier :t1
   :role :library
   :must-not [:own-language-semantics :own-persistence :depend-on-a-compiler]
-  :depends-on []}}
+  :depends-on ["kotoba-lang/datom"]}}
