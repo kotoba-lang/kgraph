@@ -17,7 +17,20 @@
   the SAME representation the kotobase datom database uses (kotobase-engine's
   entities->datoms / transact-tx). So the language's in-mem datom view and the
   database's persistent datom view datafy entities identically. kotoba :
-  kotobase = Clojure : Datomic (ADR-2607032500)."
+  kotobase = Clojure : Datomic (ADR-2607032500).
+
+  ## Why this is `.cljc` and not `.clj`
+
+  Nothing in here is JVM-specific — it is `conj`, `filter`, `remove`,
+  `mapcat` and `=` over vectors — and its one dependency, `datom.core`, has
+  been `.cljc` all along. The `.clj` extension was habit, and habit is not a
+  reason to pin a caller to a runtime: the order in this workspace is
+  kotoba-wasm -> clojurewasm -> ClojureScript -> nbb, with the JVM last.
+
+  An EAVT store is exactly the kind of thing a browser-side or nbb-side host
+  wants, and until 2026-08-18 the extension alone said no. `test/run_portable.cljs`
+  runs the same suite under nbb so that the claim is measured rather than
+  asserted by a file rename."
   (:require [clojure.string :as str]
             [datom.core :as dc]))
 

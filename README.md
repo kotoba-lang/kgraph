@@ -24,6 +24,37 @@ checkable from outside.
 
 ## Test
 
+Two runtimes, one suite. `src/` and `test/` are `.cljc`; the JVM is the last
+runtime in this workspace's order, not the only one.
+
 ```bash
-clojure -M:test
+clojure -M:test                                     # JVM
+
+CP=$(nbb tools/portable-classpath.cljs)             # nbb — no JVM, no build
+nbb --classpath "$CP" test/run_portable.cljs
 ```
+
+Run the nbb one from somewhere that is not this directory too. A suite run
+only from the repo root cannot detect a working-directory assumption, which
+is the failure that made this conversion necessary elsewhere:
+
+```bash
+cd /tmp && CP=$(nbb ~/…/kgraph/tools/portable-classpath.cljs ~/…/kgraph) \
+  && nbb --classpath "$CP" ~/…/kgraph/test/run_portable.cljs
+```
+
+`tools/portable-classpath.cljs` resolves `datom.core` from the `:git/sha` in
+`deps.edn` — nbb has no dependency resolver, and retyping the sha into the
+command is how a test run keeps passing against a checkout the pin left
+behind.
+
+## Prove the suite can fail
+
+```bash
+nbb tools/check-mutations.cljs   # pre-flight: each :find occurs exactly once
+nbb tools/mutate.cljs            # 8 mutations against the JVM half
+```
+
+A mutation nothing reddens is reported as a SURVIVOR, which is a finding
+about the suite. See the header of `tools/mutations.edn` for what the table
+covers and what it does not.
