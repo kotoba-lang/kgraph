@@ -31,7 +31,7 @@
   wants, and until 2026-08-18 the extension alone said no. `test/run_portable.cljs`
   runs the same suite under nbb so that the claim is measured rather than
   asserted by a file rename."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [datom.core :as dc]))
 
 (defn assert-datom
