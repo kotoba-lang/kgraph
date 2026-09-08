@@ -25,7 +25,7 @@
          '["node:os" :as os]
          '["node:path" :as path]
          '[clojure.edn :as edn]
-         '[clojure.string :as str])
+         '[kotoba.lang.text :as str])
 
 (def root (path/resolve (or (first *command-line-args*) ".")))
 
