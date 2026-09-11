@@ -28,7 +28,7 @@
   kotoba-wasm -> clojurewasm -> ClojureScript -> nbb, with the JVM last.
 
   An EAVT store is exactly the kind of thing a browser-side or nbb-side host
-  wants, and until 2026-08-18 the extension alone said no. `test/run_portable.cljs`
+  wants, and until 2026-08-18 the extension alone said no. `test/run_portable.cljk`
   runs the same suite under nbb so that the claim is measured rather than
   asserted by a file rename."
   (:require [kotoba.lang.text :as str]

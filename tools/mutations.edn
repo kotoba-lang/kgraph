@@ -1,5 +1,5 @@
 ;; One mutation per invariant. `:find` must occur EXACTLY ONCE in `:file` —
-;; `tools/mutate.cljs` refuses otherwise, because a mutation that landed in a
+;; `tools/mutate.cljk` refuses otherwise, because a mutation that landed in a
 ;; comment or a second call site produces a red suite that proves nothing.
 ;;
 ;; ## SCOPE
@@ -20,7 +20,7 @@
 ;; no reader conditionals in `src/`, so for kgraph the two halves execute the
 ;; SAME forms and a kill here is a kill there — but that is a property of
 ;; this file today, not a general one. The cljs half is run by
-;; `test/run_portable.cljs` and must be run separately.
+;; `test/run_portable.cljk` and must be run separately.
 ;;
 ;; ## What the suite looked like before, measured
 ;;
@@ -41,48 +41,48 @@
 ;; anything. Mutate a VALUE.
 [{:id :assert-datom-appends-at-the-end
   :invariant "the log is append-only and in insertion order"
-  :file "src/kotoba/kgraph.cljc"
+  :file "src/kotoba/kgraph.cljk"
   :find "  (conj (vec datoms) datom))"
   :replace "  (conj (seq datoms) datom))"}
 
  {:id :retract-removes-every-occurrence
   :invariant "retract-datom drops all copies, not the ones equal to nothing"
-  :file "src/kotoba/kgraph.cljc"
+  :file "src/kotoba/kgraph.cljk"
   :find "  (vec (remove #(= % datom) datoms)))"
   :replace "  (vec (remove #(= % ::never) datoms)))"}
 
  {:id :get-objects-reads-the-entity-position
   :invariant "an [e a v] datom is addressed by e, not by a"
-  :file "src/kotoba/kgraph.cljc"
+  :file "src/kotoba/kgraph.cljk"
   :find "  (vec (filter #(= e (first %)) datoms)))"
   :replace "  (vec (filter #(= e (second %)) datoms)))"}
 
  {:id :a-logic-variable-is-spelled-with-a-question-mark
   :invariant "?x binds; a plain symbol is a value to match"
-  :file "src/kotoba/kgraph.cljc"
+  :file "src/kotoba/kgraph.cljk"
   :find "(str/starts-with? (name x) \"?\")"
   :replace "(str/starts-with? (name x) \"!\")"}
 
  {:id :a-repeated-variable-must-agree-across-clauses
   :invariant "the join is a join and not a cross product"
-  :file "src/kotoba/kgraph.cljc"
+  :file "src/kotoba/kgraph.cljk"
   :find "                 (when (= (get bindings pat) val) bindings)"
   :replace "                 bindings"}
 
  {:id :results-are-deduplicated
   :invariant "distinct rows, per the docstring"
-  :file "src/kotoba/kgraph.cljc"
+  :file "src/kotoba/kgraph.cljk"
   :find "    (vec (distinct (map (fn [b] (mapv b find)) results)))))"
   :replace "    (vec (map (fn [b] (mapv b find)) results))))"}
 
  {:id :the-join-starts-from-one-empty-binding-set
   :invariant "seeding with [] answers no to every query, which looks correct"
-  :file "src/kotoba/kgraph.cljc"
+  :file "src/kotoba/kgraph.cljk"
   :find "                        [{}]"
   :replace "                        []"}
 
  {:id :assert-entities-flattens
   :invariant "many entities produce one flat datom log"
-  :file "src/kotoba/kgraph.cljc"
+  :file "src/kotoba/kgraph.cljk"
   :find "  (into (vec datoms) (mapcat dc/eavt entities)))"
   :replace "  (into (vec datoms) (map dc/eavt entities)))"}]

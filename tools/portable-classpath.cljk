@@ -1,8 +1,8 @@
 #!/usr/bin/env nbb
 ;; Print the nbb classpath for this repo's portable suite, as ABSOLUTE paths.
 ;;
-;;   nbb tools/portable-classpath.cljs            # rooted at the cwd
-;;   nbb tools/portable-classpath.cljs /path/repo # rooted anywhere
+;;   nbb tools/portable-classpath.cljk            # rooted at the cwd
+;;   nbb tools/portable-classpath.cljk /path/repo # rooted anywhere
 ;;
 ;; ## Why this exists
 ;;
@@ -13,7 +13,7 @@
 ;; until `deps.edn` moves and the command silently keeps testing the old
 ;; checkout — so the sha is READ FROM `deps.edn`, never retyped.
 ;;
-;; The output is absolute because the point of `test/run_portable.cljs` is to
+;; The output is absolute because the point of `test/run_portable.cljk` is to
 ;; be run from a directory that is not this repo. A relative classpath is
 ;; right in the one place that was already working.
 ;;
