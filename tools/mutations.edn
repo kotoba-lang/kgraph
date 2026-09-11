@@ -16,7 +16,7 @@
 ;; join is a scan) and it does not cover what happens when `:find` names a
 ;; variable no clause binds, which is undefined today and has no test.
 ;;
-;; ⚠ These mutations run `clojure -M:test`, the JVM half. This namespace has
+;; ⚠ These mutations run `kbb -M:test`, the JVM half. This namespace has
 ;; no reader conditionals in `src/`, so for kgraph the two halves execute the
 ;; SAME forms and a kill here is a kill there — but that is a property of
 ;; this file today, not a general one. The cljs half is run by

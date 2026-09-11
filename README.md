@@ -28,10 +28,10 @@ Two runtimes, one suite. `src/` and `test/` are `.cljc`; the JVM is the last
 runtime in this workspace's order, not the only one.
 
 ```bash
-clojure -M:test                                     # JVM
+kbb -M:test                                     # JVM
 
-CP=$(nbb tools/portable-classpath.cljk)             # nbb — no JVM, no build
-nbb --classpath "$CP" test/run_portable.cljk
+CP=$(kbb --backend sci tools/portable-classpath.cljk)             # nbb — no JVM, no build
+kbb --backend sci --classpath "$CP" test/run_portable.cljk
 ```
 
 Run the nbb one from somewhere that is not this directory too. A suite run
@@ -40,7 +40,7 @@ is the failure that made this conversion necessary elsewhere:
 
 ```bash
 cd /tmp && CP=$(nbb ~/…/kgraph/tools/portable-classpath.cljk ~/…/kgraph) \
-  && nbb --classpath "$CP" ~/…/kgraph/test/run_portable.cljk
+  && kbb --backend sci --classpath "$CP" ~/…/kgraph/test/run_portable.cljk
 ```
 
 `tools/portable-classpath.cljk` resolves `datom.core` from the `:git/sha` in
@@ -51,8 +51,8 @@ behind.
 ## Prove the suite can fail
 
 ```bash
-nbb tools/check-mutations.cljk   # pre-flight: each :find occurs exactly once
-nbb tools/mutate.cljk            # 8 mutations against the JVM half
+kbb --backend sci tools/check-mutations.cljk   # pre-flight: each :find occurs exactly once
+kbb --backend sci tools/mutate.cljk            # 8 mutations against the JVM half
 ```
 
 A mutation nothing reddens is reported as a SURVIVOR, which is a finding
