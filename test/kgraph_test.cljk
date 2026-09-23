@@ -1,5 +1,5 @@
 (ns kgraph-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [kotoba.kgraph :as kgraph]))
 
 ;; Load gate: the split must not break namespace resolution. Each extracted
